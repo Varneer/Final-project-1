@@ -8,8 +8,9 @@
 </head>
 <body class="body">
 
-    <h1>Косынка</h1>
+    <h1 class="Kos">Косынка</h1>
     <div id="deck"></div>
+    <div class="card"></div>
 
     <script>
 
@@ -34,6 +35,35 @@ function shuffle(arr) {
     return arr;
 }
 
+function dealCards(numPlayers, numCards) {
+    let players = []
+    for (let i = 0; i<numPlayers; i++){
+        let playerHand = [];
+        for (let k = 0; k < numCards; k++) {
+            playerHand.push(cards.pop());
+        }
+        players.push(playerHand);
+    }
+    return players;
+}
+
+let maxScore = 0;
+let winners = [];
+
+for (let i = 0; k < players.length; k++) {
+    let playerScore = 0;
+    for (let k = 0; k < players[i].length; k++) {
+        playerScore += parseInt(players[i][k])
+    }
+    if (playerScore > maxScore) {
+        maxScore = playerScore;
+        winners = [i+1];
+    }
+    else if (playerScore === maxScore) {
+        winners.push(i+1);
+    }
+}
+
 const deckElement = document.getElementById (`deck`);
 
 for (let card of deck) {
@@ -43,15 +73,26 @@ for (let card of deck) {
     deckElement.appendChild(cardElement);
 }
 
-function addEventListener("click", (event) => {
-    const clickedCard = event.target;
-    if (clickedCard.classList.contains('card')) {
-        const index = Array.from(deckElement.children).indexOf(clickedCard);
-        const card = deck[index];
+// function eventTargetaddEventListener("click", (event) => {
+//     const clickedCard = event.target;
+//     if (clickedCard.classList.contains('card')) {
+//         const index = Array.from(deckElement.children).indexOf(clickedCard);
+//         const card = deck[index];
 
-        alert(`Вы выбрали карту ${card.num} ${card.suit}`);
+//         alert(`Вы выбрали карту ${card.num} ${card.suit}`);
+//     }
+// });
+
+function showResult(winners) {
+    if (winners.length === 1) {
+        console.log(`Победил игрок ${winners[0]}`);
+    } else {
+        console.log( `Ничья между игроками ${winners.join(' и ')}`)
     }
-});
+}
+
+
+showResult(winners);
 
     </script>
 </body>
